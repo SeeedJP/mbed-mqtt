@@ -226,6 +226,7 @@ public:
      *  @return success code - on failure, this means the client has disconnected
      */
     int yield(unsigned long timeout_ms = 1000L);
+    int yield2(unsigned long timeout_ms = 1000L);
 
     /** Is the client connected?
      *  @return flag - is the client connected or not?
@@ -588,6 +589,21 @@ int MQTT::Client<Network, Timer, a, b>::yield(unsigned long timeout_ms)
             rc = FAILURE;
             break;
         }
+    }
+
+    return rc;
+}
+
+template<class Network, class Timer, int a, int b>
+int MQTT::Client<Network, Timer, a, b>::yield2(unsigned long timeout_ms)
+{
+    int rc = SUCCESS;
+    Timer timer;
+
+    timer.countdown_ms(timeout_ms);
+    if (cycle(timer) < 0)
+    {
+        rc = FAILURE;
     }
 
     return rc;

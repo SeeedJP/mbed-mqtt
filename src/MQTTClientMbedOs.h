@@ -210,6 +210,7 @@ public:
      * @retval NSAPI_ERROR_OK on success, error code on failure
      */
     nsapi_error_t yield(unsigned long timeout_ms = 1000L) ;
+    nsapi_error_t yield2(unsigned long timeout_ms = 1000L);
 
     /**
      * @brief Disconnect from a broker, that the client has been connected to.

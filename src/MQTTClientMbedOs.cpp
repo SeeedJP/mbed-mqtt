@@ -163,6 +163,21 @@ nsapi_error_t MQTTClient::yield(unsigned long timeout_ms)
     return ret < 0 ? NSAPI_ERROR_NO_CONNECTION : ret;
 }
 
+nsapi_error_t MQTTClient::yield2(unsigned long timeout_ms)
+{
+    nsapi_error_t ret = NSAPI_ERROR_OK;
+    if (client != NULL) {
+        ret = client->yield2(timeout_ms);
+    }
+    else if (clientSN != NULL) {
+        ret = clientSN->yield(timeout_ms);
+    }
+    else {
+        return NSAPI_ERROR_NO_CONNECTION;
+    }
+    return ret < 0 ? NSAPI_ERROR_NO_CONNECTION : ret;
+}
+
 nsapi_error_t MQTTClient::disconnect()
 {
     nsapi_error_t ret = NSAPI_ERROR_OK;
